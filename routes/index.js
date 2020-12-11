@@ -6,8 +6,15 @@ var router = express.Router();
 mongoose.connect('mongodb://localhost:27017/ads', {useNewUrlParser: true});
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', async (req, res, next) => {
+  const ads = await Ads.find();
+  return res.json(ads);
+});
+
+router.get('/:id', async (req, res, next) => {
+  const id = req.params.id;
+  const ad = await Ads.findOne({_id : id});
+  res.json(ad);
 });
 
 router.post('/', async (req, res) => {
