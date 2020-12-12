@@ -40,4 +40,10 @@ router.post('/', async (req, res) => {
 
 })
 
+router.delete('/:id', async(req, res) => {
+  const id = req.params.id;
+  const suppr = await Ads.deleteOne({_id : id});
+  res.json(suppr);
+})
+
 module.exports = router;
