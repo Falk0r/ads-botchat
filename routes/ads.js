@@ -1,9 +1,10 @@
 var express = require('express');
 const mongoose = require('mongoose');
-const Ads = require('../models/shema');
+const Ads = require('../models/ads');
+const keys = require('../config/keys');
 var router = express.Router();
 
-mongoose.connect('mongodb://localhost:27017/ads', {useNewUrlParser: true});
+mongoose.connect(keys.mongodb.dbURI, {useNewUrlParser: true});
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
