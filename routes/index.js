@@ -46,4 +46,26 @@ router.delete('/:id', async(req, res) => {
   res.json(suppr);
 })
 
+router.patch('/:id', async(req, res) => {
+  const id = req.params.id;
+  const ad = await Ads.findById(id);
+
+  const text = req.body.text;
+  const image = req.body.image;
+  const url = req.body.url;
+
+  if (text) {
+    ad.text = text;
+  }
+  if (image) {
+    ad.image = image;
+  }
+  if (url) {
+    ad.url = url;
+  }
+
+  await ad.save();
+  res.json(ad)
+})
+
 module.exports = router;
