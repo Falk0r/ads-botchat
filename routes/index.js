@@ -11,9 +11,9 @@ router.get('/', async (req, res, next) => {
   return res.json(ads);
 });
 
-router.get('/:id', async (req, res, next) => {
-  const id = req.params.id;
-  const ad = await Ads.findOne({_id : id});
+router.get('/:user', async (req, res, next) => {
+  const user = req.params.user;
+  const ad = await Ads.find({user : user});
   res.json(ad);
 });
 
