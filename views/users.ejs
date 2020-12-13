@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>ads-botchat</title>
+</head>
+<body>
+    <h1>Users, welcome <%= name %></h1>
+    <div class="create-ads">
+        <form id="createAds">
+            <label for="text">Text de votre ad</label>
+            <input type="text" id="text">
+            <label for="image">Url de votre image</label>
+            <input type="url" id="image">
+            <label for="url">Url de la pub</label>
+            <input type="url" id="url">
+            <input type="text" id="googleId" value="<%= googleId %>" hidden>
+            <button type="submit">Créer</button>
+        </form>
+    </div>
+    <div class="my-ads">
+        
+    </div>
+    
+</body>
+<script src="/javascripts/recordAds.js"></script>
+</html>
