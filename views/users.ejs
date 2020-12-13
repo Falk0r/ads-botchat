@@ -13,16 +13,22 @@
         <div class="create-ads">
             <form id="createAds">
                 <label for="text">Text de votre ad</label>
-                <input type="text" v-model="text">
+                <input type="text" id="text" v-model.trim="text" required>
                 <label for="image">Url de votre image</label>
-                <input type="url" v-model="image">
+                <input type="url" id="image" v-model="image">
                 <label for="url">Url de la pub</label>
-                <input type="url" v-model="url">
-                <button @click="recordAds">Créer</button>
+                <input type="url" id="url" v-model="url" required>
+                <button @click.prevent="recordAds">Créer</button>
             </form>
         </div>
-        <div class="my-ads">
-            
+        <div v-if="ads">
+            <p>Yours ads :</p>
+            <ul v-for="ad in ads">
+                <li hidden>{{ad._id}}</li>
+                <li>{{ad.text}}</li>
+                <li>{{ad.image}}</li>
+                <li>{{ad.url}}</li>
+            </ul>
         </div>
     </div>
 <script>
@@ -30,15 +36,55 @@
     el: '#app',
     data: {
         name: '<%- name %>',
-        googleIdid: '<%- googleId %>',
-        text: "",
-        image: "",
-        url: "",
+        googleId: '<%- googleId %>',
+        text: null,
+        image: null,
+        url: null,
+        ads: null,
     },
     methods: {
         recordAds(){
+            const text = document.getElementById('text');
+            const image = document.getElementById('image');
+            const url = document.getElementById('url');
 
+            if (image.validity.valid && url.validity.valid && text.validity.valid) {
+                console.log('on envoie');
+                console.log(this.text);
+                fetch(`/ads`, {
+                    method: 'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user: this.googleId,
+                        text: this.text,
+                        image: this.image,
+                        url: this.url
+                    })
+                })
+                this.clearInput();
+                this.getAds();
+            } else {
+                console.log('on envoie pas');
+            }
+        },
+        getAds(){
+            fetch(`/ads/${this.googleId}`)
+            .then(resp => resp.json())
+            .then(data => {
+                this.ads = data
+            })
+        },
+        clearInput(){
+            this.text = "",
+            this.image = "",
+            this.url = ""
         }
+    },
+    created(){
+        this.getAds();
     }
     })
 </script>
