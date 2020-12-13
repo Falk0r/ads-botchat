@@ -12,7 +12,7 @@ function isUserAuthenticated(req, res, next) {
 
 /* GET users listing. */
 router.get('/', isUserAuthenticated,function(req, res, next) {
-  res.send('respond with a resource <li><a href="/logout">Logout</a></li>');
+  res.render('users', {name: req.user._json.name, googleId: req.user._json.sub});
 });
 
 module.exports = router;

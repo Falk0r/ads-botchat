@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>ads-botchat</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1>Index</h1>
-    <p>Welcome to index MAGGLE</p>
-    <ul>
-      <li><a href="/login/auth/google">Login</a></li>
-      <li><a href="/users">Users</a></li>
-      <li><a href="/logout">Logout</a></li>
-  </ul>
-  </body>
+<head>
+<title>Welcome to Vue</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<h1></h1>
+<p>Welcome to </p>
+<div id="app">
+    <img src="https://vuejs.org/images/logo.png" alt="Vue logo">
+    <h1>{{ greeting }}</h1>
+</div>
+<ul>
+    <li><a href="/login/auth/google">Login</a></li>
+    <li><a href="/users">Users</a></li>
+    <li><a href="/logout">Logout</a></li>
+</ul>
+<script>
+var app = new Vue({
+el: '#app',
+data: {
+greeting: 'Welcome to your Vue.js app!',
+},
+methods: {
+}
+})
+</script>
+</body>
 </html>
