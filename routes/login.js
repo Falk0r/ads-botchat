@@ -58,8 +58,6 @@ router.post("/",
                             const token = jwt.sign({user: body}, keys.secret);
 
                             return res.json({ Token: token, authenticated: true });
-
-                            // return jsonify({'Token': token, 'authenticated': True})
                         }
                     )
                 } catch (error) {

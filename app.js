@@ -13,6 +13,7 @@ const keys = require("./config/keys");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var adsRouter = require("./routes/ads");
+var apiRouter = require("./routes/api");
 var loginRouter = require("./routes/login");
 
 var app = express();
@@ -70,6 +71,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/ads", passport.authenticate('jwt', {session: false}) ,adsRouter);
 app.use("/login", loginRouter);
+app.use("/api", passport.authenticate('jwt', {session: false}) ,apiRouter);
 
 // Logout route
 app.get("/logout", (req, res) => {
