@@ -6,7 +6,8 @@ const passport = require("passport");
 const mongoose = require('mongoose');
 const Users = require('../models/users');
 const keys = require('../config/keys');
-mongoose.connect(keys.mongodb.dbURI, {useNewUrlParser: true});
+
+mongoose.connect(keys.mongodb.dbURI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 
 // passport.authenticate middleware is used here to authenticate the request

@@ -4,7 +4,7 @@ const Ads = require('../models/ads');
 const keys = require('../config/keys');
 var router = express.Router();
 
-mongoose.connect(keys.mongodb.dbURI, {useNewUrlParser: true});
+mongoose.connect(keys.mongodb.dbURI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
