@@ -23,8 +23,9 @@ const createAds = async (owner, datas) => {
     const text = datas.text;
     const image = datas.image;
     const url = datas.url;
+    const link = datas.link;
 
-    if (!user || !title || !text || !image || !url) {
+    if (!user || !title || !text || !image || !url || !link) {
         return ({ message: "error to create an ad" });
     }
 
@@ -34,6 +35,7 @@ const createAds = async (owner, datas) => {
         text,
         image,
         url,
+        link,
     });
     try {
         await new_ads.save();
