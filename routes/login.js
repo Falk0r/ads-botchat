@@ -2,9 +2,11 @@ var express = require('express');
 var router = express.Router();
 //Google Auth
 const passport = require("passport");
+//User Auth
+const jwt = require('jsonwebtoken');
 //mongoDB
 const mongoose = require('mongoose');
-const Users = require('../models/users');
+const UsersGoogle = require('../models/usersGoogle');
 const keys = require('../config/keys');
 
 mongoose.connect(keys.mongodb.dbURI, {useNewUrlParser: true, useUnifiedTopology: true});
@@ -18,10 +20,10 @@ scope: ["profile", "email"]
 // The middleware receives the data from Google and runs the function on Strategy config
 router.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
     console.log(req.user._json);
-    Users.findOne({googleId : req.user._json.sub}).then((currentUser) => {
+    UsersGoogle.findOne({googleId : req.user._json.sub}).then((currentUser) => {
         //if we haven't record, create a new user
         if (!currentUser) {
-            new Users({
+            new UsersGoogle({
                 googleId : req.user._json.sub,
                 name : req.user._json.name,
                 given_name : req.user._json.given_name,
@@ -35,6 +37,38 @@ router.get('/auth/google/callback', passport.authenticate('google'), (req, res) 
 
     res.redirect('/users');
 });
+
+router.post("/",
+    async (req, res, next) => {
+        passport.authenticate(
+            'login',
+            async (err, user, info) => {
+                try {
+                    if (err || !user) {
+                        const error = new Error('An error occured.');
+                        return next(error);
+                    }
+                    req.login(
+                        user,
+                        {session: false},
+                        async (error) => {
+                            if (error) return next(error);
+
+                            const body = { userName: user.name, userEmail: user.email}
+                            const token = jwt.sign({user: body}, keys.secret);
+
+                            return res.json({ Token: token, authenticated: true });
+
+                            // return jsonify({'Token': token, 'authenticated': True})
+                        }
+                    )
+                } catch (error) {
+                    return next(error);
+                }
+            }
+        )(req, res, next);
+    }
+)
 
 
 module.exports = router;
