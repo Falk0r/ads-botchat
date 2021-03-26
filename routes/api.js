@@ -18,4 +18,10 @@ router.delete("/ads", async (req, res) => {
     return res.json(deleteAds);
 });
 
+router.put("/ads", async (req, res) => {
+    console.log(req.body);
+    const updateAds = await ads.updateAds(req.body)
+    return res.json(updateAds);
+})
+
 module.exports = router;

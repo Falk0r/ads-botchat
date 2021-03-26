@@ -52,6 +52,31 @@ const deleteAds = async (ads) => {
     }
 }
 
+const updateAds = async (ads) => {
+    const id = ads._id;
+    const ad = await Ads.findById(id);
+
+    if (ads.title) {
+        ad.title = ads.title;
+    }
+    if (ads.text) {
+        ad.text = ads.text;
+    }
+    if (ads.image) {
+        ad.image = ads.image;
+    }
+    if (ads.url) {
+        ad.url = ads.url;
+    }
+    try {
+        await ad.save();
+        return ad;
+    } catch (error) {
+        return ({message: "error to update ads"})   
+    }
+}
+
 module.exports.getAllAds = getAllAds;
 module.exports.createAds = createAds;
 module.exports.deleteAds = deleteAds;
+module.exports.updateAds = updateAds;
