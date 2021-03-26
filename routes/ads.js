@@ -31,6 +31,7 @@ router.post("/", async (req, res) => {
     const text = req.body.text;
     const image = req.body.image;
     const url = req.body.url;
+    const status = "pending";
 
     if (!user || !text || !image || !url) {
         res.send("Il manque un argument");
@@ -42,6 +43,7 @@ router.post("/", async (req, res) => {
         text,
         image,
         url,
+        status,
     });
 
     await nouveau_ads.save();

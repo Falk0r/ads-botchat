@@ -1,40 +1,21 @@
 var express = require("express");
-const mongoose = require("mongoose");
-const Ads = require("../models/ads");
-const keys = require("../config/keys");
 var router = express.Router();
-
-mongoose.connect(keys.mongodb.dbURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+const ads = require("../controllers/ads");
 
 router.get("/ads", async (req, res, next) => {
-    console.log(req.user);
-    const ads = await Ads.find({ user: req.user.userName });
-    return res.json(ads);
+    const getAllAds = await ads.getAllAds(req.user);
+    return res.json(getAllAds);
 });
 
 router.post("/ads", async (req, res, next) => {
-    console.log(req.body);
-    const user = req.user.userName;
-    const text = req.body.text;
-    const image = req.body.image;
-    const url = req.body.url;
+    const createAds = await ads.createAds(req.user, req.body);
+    return res.json(createAds);
+});
 
-    if (!user || !text || !image || !url) {        
-        return res.json({message: "error to create an ad"});
-    }
-
-    const new_ads = new Ads({
-        user,
-        text,
-        image,
-        url,
-    });
-
-    await new_ads.save();
-    return res.json(new_ads);
+router.delete("/ads", async (req, res) => {
+    console.log(req.body.item);
+    const deleteAds = await ads.deleteAds(req.body.item);
+    return res.json(deleteAds);
 });
 
 module.exports = router;

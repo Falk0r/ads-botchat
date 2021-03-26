@@ -42,6 +42,8 @@ passport.use(
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
       },
       async (token, done) => {
+        console.log('ok google');
+        console.log(token);
         try {
           return done(null, token.user);
         } catch (error) {

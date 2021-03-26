@@ -54,7 +54,7 @@ router.post("/",
                         async (error) => {
                             if (error) return next(error);
 
-                            const body = { userName: user.name, userEmail: user.email}
+                            const body = { userName: user.name, userEmail: user.email, userId : user._id}
                             const token = jwt.sign({user: body}, keys.secret);
 
                             return res.json({ Token: token, authenticated: true });
@@ -67,6 +67,7 @@ router.post("/",
         )(req, res, next);
     }
 )
+
 
 
 module.exports = router;
