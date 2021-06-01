@@ -7,6 +7,7 @@ var router = express.Router();
 mongoose.connect(keys.mongodb.dbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
 });
 
 /* GET home page. */

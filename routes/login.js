@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const UsersGoogle = require('../models/usersGoogle');
 const keys = require('../config/keys');
 
-mongoose.connect(keys.mongodb.dbURI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(keys.mongodb.dbURI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true,});
 
 
 // passport.authenticate middleware is used here to authenticate the request
